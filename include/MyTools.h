@@ -2,17 +2,30 @@
 
 #include <string>
 #include <cstring>
+#include <fstream>
+#include <iostream>
 
 namespace MyTools {
 
-void OpenLogFile(const std::string& FN);
+std::string GetCurDateTime();
 
-void CloseLogFile();
+class FileLoggerSingletone {
+    static std::ofstream logOut;
 
-void WriteToLog(const std::string& str);
+    static bool loggerInUse;
+    const std::string FileName;
+    FileLoggerSingletone();
 
-void WriteToLog(const std::string& str, int n);
+    FileLoggerSingletone(const std::string &FN);
 
-void WriteToLog(const std::string& str, double d);
+public:
+    //FileLoggerSingletone(const FileLoggerSingletone & root) = delete;
+    static FileLoggerSingletone getInstance();
+    static void OpenLogFile(const std::string &FileName);
+    static void CloseLogFile();
+    static void WriteToLog(const std::string &str);
+    static void WriteToLog(const std::string &str, int n);
+    __attribute__((unused)) static void WriteToLog(const std::string &str, double d);
+};
 
 }; // namespace MyTools
