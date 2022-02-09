@@ -51,6 +51,15 @@ __attribute__((unused)) void FileLoggerSingletone::WriteToLog(const std::string 
         logOut << GetCurDateTime() << " - " << str << d << std::endl;
     }
 }
+    LoggerSingleton & getInstance() {
+        static LoggerSingleton singleInstance;
+        return singleInstance;
+    };
+    void OpenLogFile(const std::string &FileName);
+    void CloseLogFile();
+    void WriteToLog(const std::string &str);
 
+    __attribute__((unused)) void WriteToLog(const std::string &str, int n);
+    __attribute__((unused))  void WriteToLog(const std::string &str, double d);
 
 } // namespace MyTools
