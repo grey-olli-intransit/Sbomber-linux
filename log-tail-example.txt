@@ -1,0 +1,10 @@
+Wed Feb  9 18:26:20 2022
+ -  933888 GotoXY invoke begin
+Wed Feb  9 18:26:20 2022
+ -  933889 GotoXY invoke end
+Wed Feb  9 18:26:20 2022
+ -  933890 MoveObjects was invoked
+Wed Feb  9 18:26:20 2022
+ -  933891 CheckObjects was invoked
+Wed Feb  9 18:26:20 2022
+ -  933892 TimeFinish deltaTime = 5

@@ -28,7 +28,7 @@ int _kbhit() {
 }
 
 int main(void) {
-  MyTools::FileLoggerSingletone::getInstance().OpenLogFile("log.txt");
+  MyTools::LoggerSingleton::getInstance().OpenLogFile("log.txt");
 
   SBomber game;
 
@@ -49,7 +49,7 @@ int main(void) {
 
   } while (!game.GetExitFlag());
 
-  MyTools::FileLoggerSingletone::getInstance().CloseLogFile();
+  MyTools::LoggerSingleton::getInstance().CloseLogFile();
 
   return 0;
 }
