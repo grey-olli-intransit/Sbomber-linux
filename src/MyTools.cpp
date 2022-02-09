@@ -51,15 +51,35 @@ __attribute__((unused)) void FileLoggerSingletone::WriteToLog(const std::string 
         logOut << GetCurDateTime() << " - " << str << d << std::endl;
     }
 }
-    LoggerSingleton & getInstance() {
-        static LoggerSingleton singleInstance;
-        return singleInstance;
-    };
-    void OpenLogFile(const std::string &FileName);
-    void CloseLogFile();
-    void WriteToLog(const std::string &str);
 
-    __attribute__((unused)) void WriteToLog(const std::string &str, int n);
-    __attribute__((unused))  void WriteToLog(const std::string &str, double d);
+unsigned int MyTools::LoggerSingleton::logCounter=0;
+
+LoggerSingleton & LoggerSingleton::getInstance() {
+    static LoggerSingleton singleInstance;
+    return singleInstance;
+}
+
+void LoggerSingleton::OpenLogFile(const std::string &FileName) {
+   fls.OpenLogFile(FileName);
+}
+
+void  LoggerSingleton::CloseLogFile() {
+   fls.CloseLogFile();
+}
+
+void  LoggerSingleton::WriteToLog(const std::string &str) {
+    logCounter++;
+    fls.WriteToLog(" " + std::to_string(logCounter) + " " + str);
+}
+
+__attribute__((unused)) void LoggerSingleton::WriteToLog(const std::string &str, int n) {
+    logCounter++;
+    fls.WriteToLog(" " + std::to_string(logCounter) + " " + str, n);
+}
+
+__attribute__((unused)) void LoggerSingleton::WriteToLog(const std::string &str, double d) {
+    logCounter++;
+    fls.WriteToLog(" " + std::to_string(logCounter) + " " + str, d);
+}
 
 } // namespace MyTools

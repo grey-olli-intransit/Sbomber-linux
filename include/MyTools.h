@@ -35,9 +35,10 @@ public:
 
 // proxy for FileLoggerSingletone
 class LoggerSingleton {
-    FileLoggerSingletone fls = MyTools::FileLoggerSingletone::getInstance();
+    FileLoggerSingletone & fls = MyTools::FileLoggerSingletone::getInstance();
 
     static unsigned int logCounter;
+
     LoggerSingleton() = default;
     ~LoggerSingleton() = default;
 public:
@@ -57,7 +58,6 @@ public:
     __attribute__((unused))  void WriteToLog(const std::string &str, double d);
 
 };
-
 
 
 }; // namespace MyTools
