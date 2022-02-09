@@ -3,9 +3,8 @@
 #include "ScreenSingleton.h"
 
 #include <iostream>
-#include <fstream>
 #include <unistd.h>
-#include <fcntl.h>
+//#include <fcntl.h>
 #include <termios.h>
 #include <sys/ioctl.h>
 
@@ -29,7 +28,7 @@ int _kbhit() {
 }
 
 int main(void) {
-  MyTools::OpenLogFile("log.txt");
+  MyTools::FileLoggerSingletone::getInstance().OpenLogFile("log.txt");
 
   SBomber game;
 
@@ -50,7 +49,7 @@ int main(void) {
 
   } while (!game.GetExitFlag());
 
-  MyTools::CloseLogFile();
+  MyTools::FileLoggerSingletone::getInstance().CloseLogFile();
 
   return 0;
 }

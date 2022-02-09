@@ -1,3 +1,16 @@
+cmake-build-debug/*
+cmake-build-release/*
+
+# 39Mb for a single run is too much to keep
+log.txt
+
+# clion
+.idea/*
+
+# vim swap files
+.*.swp
+
+
 # Prerequisites
 *.d
 
