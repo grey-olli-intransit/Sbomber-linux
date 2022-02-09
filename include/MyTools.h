@@ -10,22 +10,27 @@ namespace MyTools {
 std::string GetCurDateTime();
 
 class FileLoggerSingletone {
-    static std::ofstream logOut;
+    std::ofstream logOut;
 
-    static bool loggerInUse;
     const std::string FileName;
-    FileLoggerSingletone();
-
-    FileLoggerSingletone(const std::string &FN);
+    FileLoggerSingletone() = default;
+    ~FileLoggerSingletone() = default;
 
 public:
-    //FileLoggerSingletone(const FileLoggerSingletone & root) = delete;
-    static FileLoggerSingletone getInstance();
-    static void OpenLogFile(const std::string &FileName);
-    static void CloseLogFile();
-    static void WriteToLog(const std::string &str);
-    static void WriteToLog(const std::string &str, int n);
-    __attribute__((unused)) static void WriteToLog(const std::string &str, double d);
+    // нет копирования
+    FileLoggerSingletone(const FileLoggerSingletone & root) = delete;
+    FileLoggerSingletone & operator=(const FileLoggerSingletone &) = delete;
+    // нет перемещения
+    FileLoggerSingletone(const FileLoggerSingletone && root) = delete;
+    FileLoggerSingletone & operator=(const FileLoggerSingletone &&) = delete;
+
+    static FileLoggerSingletone & getInstance();
+    void OpenLogFile(const std::string &FileName);
+    void CloseLogFile();
+    void WriteToLog(const std::string &str);
+
+    __attribute__((unused)) void WriteToLog(const std::string &str, int n);
+    __attribute__((unused))  void WriteToLog(const std::string &str, double d);
 };
 
 }; // namespace MyTools

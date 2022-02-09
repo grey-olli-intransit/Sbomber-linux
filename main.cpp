@@ -3,9 +3,8 @@
 #include "ScreenSingleton.h"
 
 #include <iostream>
-#include <fstream>
 #include <unistd.h>
-#include <fcntl.h>
+//#include <fcntl.h>
 #include <termios.h>
 #include <sys/ioctl.h>
 
