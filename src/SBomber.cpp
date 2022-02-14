@@ -1,5 +1,6 @@
 
 #include "MyTools.h"
+#include "Command.h"
 #include "SBomber.h"
 #include "Bomb.h"
 #include "Ground.h"
@@ -9,6 +10,7 @@
 #include "enums/CraterSize.h"
 #include <chrono>
 #include <thread>
+#include <memory>
 
 SBomber::SBomber()
   : exitFlag(false), startTime(0), finishTime(0), deltaTime(0), passedTime(0),
@@ -102,29 +104,39 @@ void SBomber::CheckPlaneAndLevelGUI() {
 }
 
 void SBomber::CheckBombsAndGround() {
+  CmdRemoveDynObj * cmd = new(CmdRemoveDynObj);
+// std::make_unique_for_overwrite подчеркивается красным:
+//  CmdRemoveDynObj * cmd = std::make_unique_for_overwrite<CmdRemoveDynObj>(new CmdRemoveDynObj);
+//    CmdRemoveDynObj * cmd = std::make_unique<CmdRemoveDynObj>(CmdRemoveDynObj, std::nullptr_t);
   std::vector<Bomb*> vecBombs = FindAllBombs();
   Ground* pGround = FindGround();
   const double y = pGround->GetY();
   for (size_t i = 0; i < vecBombs.size(); i++) {
     if (vecBombs[i]->GetY() >= y) {
       pGround->AddCrater(vecBombs[i]->GetX());
-      CheckDestoyableObjects(vecBombs[i]);
-      DeleteDynamicObj(vecBombs[i]);
+        CheckDestroyableObjects(vecBombs[i]);
+
+        cmd->setOptions(vecBombs[i]);
+        cmd->execute();
+
+        delete cmd;
+
+        //DeleteDynamicObj(vecBombs[i]); // fixme: remove this call as it is replaced by above.
     }
   }
 }
 
-void SBomber::CheckDestoyableObjects(Bomb* pBomb) {
-  std::vector<DestroyableGroundObject*> vecDestoyableObjects =
-      FindDestoyableGroundObjects();
+void SBomber::CheckDestroyableObjects(Bomb* pBomb) {
+  std::vector<DestroyableGroundObject*> vecDestroyableObjects =
+          FindDestroyableGroundObjects();
   const double size = pBomb->GetWidth();
   const double size_2 = size / 2;
-  for (size_t i = 0; i < vecDestoyableObjects.size(); i++) {
+  for (size_t i = 0; i < vecDestroyableObjects.size(); i++) {
     const double x1 = pBomb->GetX() - size_2;
     const double x2 = x1 + size;
-    if (vecDestoyableObjects[i]->isInside(x1, x2)) {
-      score += vecDestoyableObjects[i]->GetScore();
-      DeleteStaticObj(vecDestoyableObjects[i]);
+    if (vecDestroyableObjects[i]->isInside(x1, x2)) {
+      score += vecDestroyableObjects[i]->GetScore();
+      DeleteStaticObj(vecDestroyableObjects[i]);
     }
   }
 }
@@ -149,7 +161,7 @@ void SBomber::DeleteStaticObj(GameObject* pObj) {
   }
 }
 
-std::vector<DestroyableGroundObject*> SBomber::FindDestoyableGroundObjects() const {
+std::vector<DestroyableGroundObject*> SBomber::FindDestroyableGroundObjects() const {
   std::vector<DestroyableGroundObject*> vec;
   Tank* pTank;
   House* pHouse;
@@ -309,3 +321,7 @@ void SBomber::DropBomb() {
     score -= Bomb::BombCost;
   }
 }
+
+//void SBomber::commandExecuter(AbstractCommand *pCommand) {
+//
+//}

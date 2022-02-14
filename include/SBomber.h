@@ -7,6 +7,9 @@
 #include "Bomb.h"
 #include "Ground.h"
 #include "Tank.h"
+#include "Command.h"
+
+class AbstractCommand;
 
 class SBomber
 {
@@ -24,12 +27,12 @@ public:
     void DrawFrame();
     void MoveObjects();
     void CheckObjects();
+    friend class CmdRemoveDynObj;
 
 private:
-
     void CheckPlaneAndLevelGUI();
     void CheckBombsAndGround();
-    void  CheckDestoyableObjects(Bomb* pBomb);
+    void CheckDestroyableObjects(Bomb* pBomb);
 
     void  DeleteDynamicObj(DynamicObject * pBomb);
     void  DeleteStaticObj(GameObject* pObj);
@@ -37,7 +40,7 @@ private:
     Ground * FindGround() const;
     Plane * FindPlane() const;
     LevelGUI * FindLevelGUI() const;
-    std::vector<DestroyableGroundObject*> FindDestoyableGroundObjects() const;
+    std::vector<DestroyableGroundObject*> FindDestroyableGroundObjects() const;
     std::vector<Bomb*> FindAllBombs() const;
 
     void DropBomb();
@@ -50,4 +53,6 @@ private:
     uint64_t startTime, finishTime, passedTime;
     uint16_t bombsNumber, deltaTime, fps;
     int16_t score;
+
+//    void commandExecuter(AbstractCommand *pCommand);
 };
