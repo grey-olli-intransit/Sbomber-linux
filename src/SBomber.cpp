@@ -116,7 +116,7 @@ void SBomber::CheckBombsAndGround() {
 
 void SBomber::CheckDestoyableObjects(Bomb* pBomb) {
   std::vector<DestroyableGroundObject*> vecDestoyableObjects =
-      FindDestoyableGroundObjects();
+          FindDestroyableGroundObjects();
   const double size = pBomb->GetWidth();
   const double size_2 = size / 2;
   for (size_t i = 0; i < vecDestoyableObjects.size(); i++) {
@@ -149,7 +149,7 @@ void SBomber::DeleteStaticObj(GameObject* pObj) {
   }
 }
 
-std::vector<DestroyableGroundObject*> SBomber::FindDestoyableGroundObjects() const {
+std::vector<DestroyableGroundObject*> SBomber::FindDestroyableGroundObjects() const {
   std::vector<DestroyableGroundObject*> vec;
   Tank* pTank;
   House* pHouse;
