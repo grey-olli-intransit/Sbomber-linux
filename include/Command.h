@@ -4,25 +4,20 @@
 #pragma once
 #include <vector>
 #include "DynamicObject.h"
-#include "SBomber.h"
-
-class SBomber;
 
 class AbstractCommand{
-protected:
-    SBomber * sBomber;
+
 public:
     virtual void execute() = 0;
     // void unDoExecute(); - в этом проекте не используется
 };
 
 class CmdRemoveDynObj : public AbstractCommand {
+private:
     DynamicObject * tmp;
+    std::vector<DynamicObject*> & vecDynamicObj
 public:
-    CmdRemoveDynObj();
-    void setOptions(DynamicObject * pBomb);
-    DynamicObject * getOptions();
-    CmdRemoveDynObj(std::vector<DynamicObject*> & vecDynamicObj, DynamicObject * pBomb);
+    CmdRemoveDynObj(std::vector<DynamicObject*> & vecDynamicObj, DynamicObject * pSamltOrBomb);
     CmdRemoveDynObj(DynamicObject * pBomb);
     void execute() override;
 };
