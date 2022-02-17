@@ -29,7 +29,7 @@ private:
 
     void CheckPlaneAndLevelGUI();
     void CheckBombsAndGround();
-    void  CheckDestoyableObjects(Bomb* pBomb);
+    void  CheckDestroyableObjects(Bomb* pBomb);
 
     void  DeleteDynamicObj(DynamicObject * pBomb);
     void  DeleteStaticObj(GameObject* pObj);

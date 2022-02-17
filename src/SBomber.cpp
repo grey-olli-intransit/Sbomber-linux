@@ -7,6 +7,7 @@
 #include "House.h"
 #include "ScreenSingleton.h"
 #include "enums/CraterSize.h"
+#include "BombIterator.h"
 #include <chrono>
 #include <thread>
 
@@ -105,16 +106,22 @@ void SBomber::CheckBombsAndGround() {
   std::vector<Bomb*> vecBombs = FindAllBombs();
   Ground* pGround = FindGround();
   const double y = pGround->GetY();
-  for (size_t i = 0; i < vecBombs.size(); i++) {
-    if (vecBombs[i]->GetY() >= y) {
-      pGround->AddCrater(vecBombs[i]->GetX());
-      CheckDestoyableObjects(vecBombs[i]);
-      DeleteDynamicObj(vecBombs[i]);
+  unsigned int size = vecBombs.size();
+  BombIterator bombIterator(vecBombs);
+  auto it=bombIterator.begin();
+  for(;it!=bombIterator.end();++it) {
+    if ((*it).GetY() >= y) {
+      pGround->AddCrater((*it).GetX());
+      CheckDestroyableObjects(&(*it));
+      DeleteDynamicObj(&(*it));
+      vecBombs = FindAllBombs();
+      BombIterator bombIterator(vecBombs);
+      auto it = bombIterator.begin();
     }
   }
 }
 
-void SBomber::CheckDestoyableObjects(Bomb* pBomb) {
+void SBomber::CheckDestroyableObjects(Bomb* pBomb) {
   std::vector<DestroyableGroundObject*> vecDestoyableObjects =
           FindDestroyableGroundObjects();
   const double size = pBomb->GetWidth();
