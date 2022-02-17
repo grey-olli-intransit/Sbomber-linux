@@ -103,23 +103,33 @@ void SBomber::CheckPlaneAndLevelGUI() {
 }
 
 void SBomber::CheckBombsAndGround() {
-  std::vector<Bomb*> vecBombs = FindAllBombs();
+  vecBombs = FindAllBombs();
   Ground* pGround = FindGround();
   const double y = pGround->GetY();
   unsigned int size = vecBombs.size();
   BombIterator bombIterator(vecBombs);
-  auto it=bombIterator.begin();
-  for(;it!=bombIterator.end();++it) {
-    if ((*it).GetY() >= y) {
-      pGround->AddCrater((*it).GetX());
-      CheckDestroyableObjects(&(*it));
-      DeleteDynamicObj(&(*it));
-      vecBombs = FindAllBombs();
-      BombIterator bombIterator(vecBombs);
-      auto it = bombIterator.begin();
+  auto it=this->begin();
+  for(;it!= this->end();++it) {
+        if ((*it).GetY() >= y) {
+          pGround->AddCrater((*it).GetX());
+          CheckDestroyableObjects(&(*it));
+    //          DeleteDynamicObj(&(*it));
+            it = this->erase(it);
+        }
     }
-  }
 }
+
+BombIterator  SBomber::erase(BombIterator & bombIterator) {
+    auto tmp = bombIterator;
+    ++tmp;
+    DeleteDynamicObj(&(*bombIterator));
+    return tmp;
+}
+
+// получаем итератор настроенный на начало массива
+BombIterator SBomber::begin() { BombIterator it(vecBombs); return it; }
+// итератор в конечном состоянии
+BombIterator SBomber::end() { BombIterator it(vecBombs); it.reset(); return it; }
 
 void SBomber::CheckDestroyableObjects(Bomb* pBomb) {
   std::vector<DestroyableGroundObject*> vecDestoyableObjects =

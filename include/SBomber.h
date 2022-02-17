@@ -7,6 +7,7 @@
 #include "Bomb.h"
 #include "Ground.h"
 #include "Tank.h"
+#include "BombIterator.h"
 
 class SBomber
 {
@@ -44,7 +45,16 @@ private:
 
     std::vector<DynamicObject*> vecDynamicObj;
     std::vector<GameObject*> vecStaticObj;
-    
+
+    std::vector<Bomb*> vecBombs;
+
+    // получаем итератор бомб настроенный на начало массива
+    BombIterator begin();
+    // итератор бомб в конечном состоянии
+    BombIterator end();
+
+    BombIterator erase(BombIterator & bombIterator);
+
     bool exitFlag;
 
     uint64_t startTime, finishTime, passedTime;

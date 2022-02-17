@@ -8,11 +8,14 @@
 
 class BombIterator {
 private:
-    unsigned int index;
-    std::vector<Bomb *> & refVector;
+    std::vector<Bomb *> * refVector;
     Bomb *ptr;
+    unsigned int index;
 public:
+
     explicit BombIterator(std::vector<Bomb *> &allBombs);
+
+    BombIterator(const BombIterator& rhs);
 
     void reset();
 
@@ -22,14 +25,10 @@ public:
 
     Bomb & operator*(); // операция разыменования итератора
 
-    bool operator==(BombIterator it); // проверка на логическое равенство итераторов
+    bool operator==(const BombIterator & it); // проверка на логическое равенство итераторов
 
-    bool operator!=(BombIterator it); // проверка на логическое неравенство
+    bool operator!=(const BombIterator & it); // проверка на логическое неравенство
 
-    // получаем итератор настроенный на начало массива
-    BombIterator begin();
-
-    // итератор в конечном состоянии
-    BombIterator end();
+    BombIterator &operator=(const BombIterator & it); // кастомный оператор присваивания
 
 };

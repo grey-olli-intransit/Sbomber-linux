@@ -19,11 +19,12 @@ BombIterator & BombIterator::operator++() // префиксный инкреме
     index = index + 1;
     if (index == -1)
         index = 0;
-    if(index == refVector.size()) {
+    if(index == refVector->size()) {
         index = -1;
         ptr = nullptr;
         return *this;
     }
+    // fixme: stopped editing right here:
     ptr = refVector[index];
     return *this;
 }
@@ -50,7 +51,7 @@ Bomb & BombIterator::operator*() // операция разыменования 
         return *refVector.at(index);
 }
 
-bool BombIterator::operator==(BombIterator it) // проверка на логическое равенство итераторов
+bool BombIterator::operator==(const BombIterator & it) // проверка на логическое равенство итераторов
 {
     if (index == it.index &&
         ptr == it.ptr &&
@@ -61,13 +62,10 @@ bool BombIterator::operator==(BombIterator it) // проверка на логи
     return false;
 }
 
-bool BombIterator::operator!=(BombIterator it) // проверка на логическое неравенство
+bool BombIterator::operator!=(const BombIterator & it) // проверка на логическое неравенство
 {
     return !(*this == it);
 }
 
-// получаем итератор настроенный на начало массива
-BombIterator BombIterator::begin() { BombIterator it(refVector); return it; }
-
-// итератор в конечном состоянии
-BombIterator BombIterator::end() { BombIterator it(refVector); it.reset(); return it; }
+BombIterator &BombIterator::operator=(const BombIterator& it) = default;
+BombIterator::BombIterator(const BombIterator& rhs) = default;
