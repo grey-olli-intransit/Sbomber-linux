@@ -7,6 +7,7 @@
 #include "House.h"
 #include "ScreenSingleton.h"
 #include "enums/CraterSize.h"
+#include "BombIterator.h"
 #include <chrono>
 #include <thread>
 
@@ -102,21 +103,37 @@ void SBomber::CheckPlaneAndLevelGUI() {
 }
 
 void SBomber::CheckBombsAndGround() {
-  std::vector<Bomb*> vecBombs = FindAllBombs();
+  vecBombs = FindAllBombs();
   Ground* pGround = FindGround();
   const double y = pGround->GetY();
-  for (size_t i = 0; i < vecBombs.size(); i++) {
-    if (vecBombs[i]->GetY() >= y) {
-      pGround->AddCrater(vecBombs[i]->GetX());
-      CheckDestoyableObjects(vecBombs[i]);
-      DeleteDynamicObj(vecBombs[i]);
+  unsigned int size = vecBombs.size();
+  BombIterator bombIterator(vecBombs);
+  auto it=this->begin();
+  for(;it!= this->end();++it) {
+        if ((*it).GetY() >= y) {
+          pGround->AddCrater((*it).GetX());
+          CheckDestroyableObjects(&(*it));
+    //          DeleteDynamicObj(&(*it));
+            it = this->erase(it);
+        }
     }
-  }
 }
 
-void SBomber::CheckDestoyableObjects(Bomb* pBomb) {
+BombIterator  SBomber::erase(BombIterator & bombIterator) {
+    auto tmp = bombIterator;
+    ++tmp;
+    DeleteDynamicObj(&(*bombIterator));
+    return tmp;
+}
+
+// получаем итератор настроенный на начало массива
+BombIterator SBomber::begin() { BombIterator it(vecBombs); return it; }
+// итератор в конечном состоянии
+BombIterator SBomber::end() { BombIterator it(vecBombs); it.reset(); return it; }
+
+void SBomber::CheckDestroyableObjects(Bomb* pBomb) {
   std::vector<DestroyableGroundObject*> vecDestoyableObjects =
-      FindDestoyableGroundObjects();
+          FindDestroyableGroundObjects();
   const double size = pBomb->GetWidth();
   const double size_2 = size / 2;
   for (size_t i = 0; i < vecDestoyableObjects.size(); i++) {
@@ -149,7 +166,7 @@ void SBomber::DeleteStaticObj(GameObject* pObj) {
   }
 }
 
-std::vector<DestroyableGroundObject*> SBomber::FindDestoyableGroundObjects() const {
+std::vector<DestroyableGroundObject*> SBomber::FindDestroyableGroundObjects() const {
   std::vector<DestroyableGroundObject*> vec;
   Tank* pTank;
   House* pHouse;

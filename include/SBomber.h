@@ -7,6 +7,7 @@
 #include "Bomb.h"
 #include "Ground.h"
 #include "Tank.h"
+#include "BombIterator.h"
 
 class SBomber
 {
@@ -29,7 +30,7 @@ private:
 
     void CheckPlaneAndLevelGUI();
     void CheckBombsAndGround();
-    void  CheckDestoyableObjects(Bomb* pBomb);
+    void  CheckDestroyableObjects(Bomb* pBomb);
 
     void  DeleteDynamicObj(DynamicObject * pBomb);
     void  DeleteStaticObj(GameObject* pObj);
@@ -37,14 +38,23 @@ private:
     Ground * FindGround() const;
     Plane * FindPlane() const;
     LevelGUI * FindLevelGUI() const;
-    std::vector<DestroyableGroundObject*> FindDestoyableGroundObjects() const;
+    std::vector<DestroyableGroundObject*> FindDestroyableGroundObjects() const;
     std::vector<Bomb*> FindAllBombs() const;
 
     void DropBomb();
 
     std::vector<DynamicObject*> vecDynamicObj;
     std::vector<GameObject*> vecStaticObj;
-    
+
+    std::vector<Bomb*> vecBombs;
+
+    // получаем итератор бомб настроенный на начало массива
+    BombIterator begin();
+    // итератор бомб в конечном состоянии
+    BombIterator end();
+
+    BombIterator erase(BombIterator & bombIterator);
+
     bool exitFlag;
 
     uint64_t startTime, finishTime, passedTime;
