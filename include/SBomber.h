@@ -47,6 +47,7 @@ private:
     std::vector<GameObject*> vecStaticObj;
 
     std::vector<Bomb*> vecBombs;
+    void DeleteBomb(Bomb * pBomb);
 
     // получаем итератор бомб настроенный на начало массива
     BombIterator begin();

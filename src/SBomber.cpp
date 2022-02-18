@@ -10,6 +10,7 @@
 #include "BombIterator.h"
 #include <chrono>
 #include <thread>
+#include <stack>
 
 SBomber::SBomber()
   : exitFlag(false), startTime(0), finishTime(0), deltaTime(0), passedTime(0),
@@ -104,17 +105,38 @@ void SBomber::CheckPlaneAndLevelGUI() {
 
 void SBomber::CheckBombsAndGround() {
   vecBombs = FindAllBombs();
+  Bomb * pBomb;
+  std::stack<Bomb*> stack;
   Ground* pGround = FindGround();
   const double y = pGround->GetY();
   unsigned int size = vecBombs.size();
   BombIterator bombIterator(&vecBombs);
   auto it=this->begin();
-  for(;it!= this->end();++it) {
+  for(;it!= this->end();) {
         if ((*it).GetY() >= y) {
           pGround->AddCrater((*it).GetX());
           CheckDestroyableObjects(&(*it));
+          stack.push(&(*it));
     //          DeleteDynamicObj(&(*it));
             it = this->erase(it);
+        }
+        else
+            ++it;
+    }
+  while(!stack.empty()) {
+      pBomb=stack.top();
+      DeleteBomb(pBomb);
+      stack.pop();
+  }
+
+}
+
+void SBomber::DeleteBomb(Bomb * pBomb) {
+    auto it = vecBombs.begin();
+    for (; it != vecBombs.end(); it++) {
+        if (*it == pBomb) {
+            vecBombs.erase(it);
+            break;
         }
     }
 }
@@ -123,8 +145,10 @@ BombIterator  SBomber::erase(BombIterator & bombIterator) {
     auto tmp = bombIterator;
     ++tmp;
     DeleteDynamicObj(&(*bombIterator));
+    //    DeleteBomb(&(*bombIterator)); // cannot delete here since used inside loop over the vecBombs
     return tmp;
 }
+
 
 // получаем итератор настроенный на начало массива
 BombIterator SBomber::begin() { BombIterator it(&vecBombs); return it; }
@@ -147,14 +171,15 @@ void SBomber::CheckDestroyableObjects(Bomb* pBomb) {
 }
 
 void SBomber::DeleteDynamicObj(DynamicObject* pObj) {
-  auto it = vecDynamicObj.begin();
-  for (; it != vecDynamicObj.end(); it++) {
-    if (*it == pObj) {
-      vecDynamicObj.erase(it);
-      break;
+    auto it = vecDynamicObj.begin();
+    for (; it != vecDynamicObj.end(); it++) {
+        if (*it == pObj) {
+            vecDynamicObj.erase(it);
+            break;
+        }
     }
-  }
 }
+
 
 void SBomber::DeleteStaticObj(GameObject* pObj) {
   auto it = vecStaticObj.begin();
