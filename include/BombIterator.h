@@ -13,7 +13,8 @@ private:
     unsigned int index;
 public:
 
-    explicit BombIterator(std::vector<Bomb *> &allBombs);
+//    explicit BombIterator(std::vector<Bomb *> &allBombs);
+    explicit BombIterator(std::vector<Bomb *> * allBombs);
 
     BombIterator(const BombIterator& rhs);
 

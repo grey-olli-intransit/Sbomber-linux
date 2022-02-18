@@ -107,7 +107,7 @@ void SBomber::CheckBombsAndGround() {
   Ground* pGround = FindGround();
   const double y = pGround->GetY();
   unsigned int size = vecBombs.size();
-  BombIterator bombIterator(vecBombs);
+  BombIterator bombIterator(&vecBombs);
   auto it=this->begin();
   for(;it!= this->end();++it) {
         if ((*it).GetY() >= y) {
@@ -127,9 +127,9 @@ BombIterator  SBomber::erase(BombIterator & bombIterator) {
 }
 
 // получаем итератор настроенный на начало массива
-BombIterator SBomber::begin() { BombIterator it(vecBombs); return it; }
+BombIterator SBomber::begin() { BombIterator it(&vecBombs); return it; }
 // итератор в конечном состоянии
-BombIterator SBomber::end() { BombIterator it(vecBombs); it.reset(); return it; }
+BombIterator SBomber::end() { BombIterator it(&vecBombs); it.reset(); return it; }
 
 void SBomber::CheckDestroyableObjects(Bomb* pBomb) {
   std::vector<DestroyableGroundObject*> vecDestoyableObjects =

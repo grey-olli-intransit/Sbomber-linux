@@ -5,7 +5,10 @@
 #include <vector>
 #include "Bomb.h"
 
-BombIterator::BombIterator(std::vector<Bomb *> &allBombs) : index(-1), refVector(allBombs), ptr(nullptr) {
+//BombIterator::BombIterator(std::vector<Bomb *> &allBombs) : index(-1), refVector(allBombs), ptr(nullptr) {
+//    ++(*this);
+//}
+BombIterator::BombIterator(std::vector<Bomb *> *allBombs) : index(-1), refVector(allBombs), ptr(nullptr) {
     ++(*this);
 }
 
@@ -24,16 +27,15 @@ BombIterator & BombIterator::operator++() // префиксный инкреме
         ptr = nullptr;
         return *this;
     }
-    // fixme: stopped editing right here:
-    ptr = refVector[index];
+    ptr = refVector->at(index);
     return *this;
 }
 
 BombIterator &BombIterator::operator--() // префиксный декремент
 {
     if (index == -1) {
-        index = refVector.size() - 1;
-        ptr = refVector[index];
+        index = refVector->size() - 1;
+        ptr = refVector->at(index);
         return *this;
     }
     index = index - 1;
@@ -42,13 +44,13 @@ BombIterator &BombIterator::operator--() // префиксный декреме�
         ptr = nullptr;
         return *this;
     }
-    ptr = refVector[index];
+    ptr = refVector->at(index);
     return *this;
 }
 
 Bomb & BombIterator::operator*() // операция разыменования итератора
 {
-        return *refVector.at(index);
+        return *refVector->at(index);
 }
 
 bool BombIterator::operator==(const BombIterator & it) // проверка на логическое равенство итераторов
