@@ -3,6 +3,10 @@
 #include "MyTools.h"
 #include "ScreenSingleton.h"
 
+House::House() {
+    //memset((char*)look, ' ', houseWidth * houseHeight);
+}
+
 bool House::isInside(double x1, double x2) const
 {
 	const double XBeg = x + 2;
@@ -28,17 +32,21 @@ bool House::isInside(double x1, double x2) const
 
 void House::Draw() const
 {
-	ScreenSingleton::getInstance().SetColor(CC_Yellow);
-	ScreenSingleton::getInstance().GotoXY(x, y - 5);
-	std::cout << "  ########  ";
-	ScreenSingleton::getInstance().GotoXY(x, y - 4);
-	std::cout << "##        ##";
-	ScreenSingleton::getInstance().GotoXY(x, y - 3);
-	std::cout << "############";
-	ScreenSingleton::getInstance().GotoXY(x, y - 2);
-	std::cout << "#          #";
-	ScreenSingleton::getInstance().GotoXY(x, y - 1);
-	std::cout << "#          #";
-	ScreenSingleton::getInstance().GotoXY(x, y);
-	std::cout << "############";
+    ScreenSingleton::getInstance().SetColor(CC_Yellow);
+    for (size_t i = 0; i < houseHeight; ++i)
+    {
+        ScreenSingleton::getInstance().GotoXY(x, y - i);
+        for (size_t j = 0; j < houseWidth; ++j)
+        {
+            std::cout << look[houseHeight - i - 1][j];
+        }
+    }
+}
+
+int House::getWidth() {
+    return houseWidth;
+}
+
+int House::getHeight() {
+    return houseHeight;
 }

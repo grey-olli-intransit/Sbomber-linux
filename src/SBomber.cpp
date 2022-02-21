@@ -7,8 +7,10 @@
 #include "House.h"
 #include "ScreenSingleton.h"
 #include "enums/CraterSize.h"
+#include "HouseBuilder.h"
 #include <chrono>
 #include <thread>
+#include <memory>
 
 SBomber::SBomber()
   : exitFlag(false), startTime(0), finishTime(0), deltaTime(0), passedTime(0),
@@ -51,8 +53,21 @@ SBomber::SBomber()
 
   House* pHouse = new House;
   pHouse->SetWidth(13);
-  pHouse->SetPos(80, groundY - 1);
+  pHouse->SetPos(75, groundY - 1);
   vecStaticObj.push_back(pHouse);
+
+  House* pHouse1 = new House;
+  pHouse->SetWidth(13);
+  pHouse->SetPos(110, groundY - 1);
+  vecStaticObj.push_back(pHouse1);
+
+
+  HouseBuilder1 houseBuilder1;
+  HouseBuilder2 houseBuilder2;
+
+  Director::makeHouse(houseBuilder1, *pHouse);
+  Director::makeHouse(houseBuilder2, *pHouse1);
+
 
   /*
   Bomb* pBomb = new Bomb;
@@ -108,23 +123,23 @@ void SBomber::CheckBombsAndGround() {
   for (size_t i = 0; i < vecBombs.size(); i++) {
     if (vecBombs[i]->GetY() >= y) {
       pGround->AddCrater(vecBombs[i]->GetX());
-      CheckDestoyableObjects(vecBombs[i]);
+        CheckDestroyableObjects(vecBombs[i]);
       DeleteDynamicObj(vecBombs[i]);
     }
   }
 }
 
-void SBomber::CheckDestoyableObjects(Bomb* pBomb) {
-  std::vector<DestroyableGroundObject*> vecDestoyableObjects =
-      FindDestoyableGroundObjects();
+void SBomber::CheckDestroyableObjects(Bomb* pBomb) {
+  std::vector<DestroyableGroundObject*> vecDestroyableObjects =
+          FindDestroyableGroundObjects();
   const double size = pBomb->GetWidth();
   const double size_2 = size / 2;
-  for (size_t i = 0; i < vecDestoyableObjects.size(); i++) {
+  for (size_t i = 0; i < vecDestroyableObjects.size(); i++) {
     const double x1 = pBomb->GetX() - size_2;
     const double x2 = x1 + size;
-    if (vecDestoyableObjects[i]->isInside(x1, x2)) {
-      score += vecDestoyableObjects[i]->GetScore();
-      DeleteStaticObj(vecDestoyableObjects[i]);
+    if (vecDestroyableObjects[i]->isInside(x1, x2)) {
+      score += vecDestroyableObjects[i]->GetScore();
+      DeleteStaticObj(vecDestroyableObjects[i]);
     }
   }
 }
@@ -149,7 +164,7 @@ void SBomber::DeleteStaticObj(GameObject* pObj) {
   }
 }
 
-std::vector<DestroyableGroundObject*> SBomber::FindDestoyableGroundObjects() const {
+std::vector<DestroyableGroundObject*> SBomber::FindDestroyableGroundObjects() const {
   std::vector<DestroyableGroundObject*> vec;
   Tank* pTank;
   House* pHouse;
