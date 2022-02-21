@@ -4,6 +4,7 @@ project(Sbomber_linux)
 
 set(CMAKE_CXX_STANDARD 14)
 #set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_BUILD_TYPE Debug)
 
 include_directories(include)
 include_directories(include/enums)
@@ -24,6 +25,7 @@ add_executable(Sbomber_linux
         include/SBomber.h
         include/ScreenSingleton.h
         include/Tank.h
+        include/HouseBuilder.h
         src/Bomb.cpp
         src/Crater.cpp
         src/Ground.cpp
@@ -34,4 +36,5 @@ add_executable(Sbomber_linux
         src/SBomber.cpp
         src/ScreenSingleton.cpp
         src/Tank.cpp
+        src/HouseBuilder.cpp
         main.cpp)
