@@ -4,7 +4,7 @@
 #include "ScreenSingleton.h"
 
 House::House() {
-    //memset((char*)look, ' ', houseWidth * houseHeight);
+    memset((char*)look, ' ', houseWidth * houseHeight - 1);
 }
 
 bool House::isInside(double x1, double x2) const

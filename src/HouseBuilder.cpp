@@ -42,7 +42,7 @@ void HouseBuilder1::buildWindow(House& house)
    for (int j = 2; j < 5; ++j)
    {
       house.look[5][j] = '#';
-      house.look[7][j] = '#';
+      house.look[6][j] = '#';
    }
    house.look[6][2] = '#';
    house.look[6][4] = '#';
@@ -50,7 +50,7 @@ void HouseBuilder1::buildWindow(House& house)
 
 void HouseBuilder1::buildDoor(House& house)
 {
-   for (int i = 5; i < 9; ++i)
+   for (int i = 5; i < 7; ++i)
    {
       house.look[i][7] = '#';
       house.look[i][9] = '#';
@@ -103,7 +103,7 @@ void HouseBuilder2::buildRoof(House& house)
 
 void HouseBuilder2::buildDoor(House& house)
 {
-   for (int i = 5; i < 9; ++i)
+   for (int i = 5; i < 7; ++i)
    {
       house.look[i][4] = '#';
       house.look[i][7] = '#';
