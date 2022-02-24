@@ -7,6 +7,7 @@
 #include "House.h"
 #include "ScreenSingleton.h"
 #include "enums/CraterSize.h"
+#include "Visitor.h"
 #include <chrono>
 #include <thread>
 
@@ -14,6 +15,8 @@ SBomber::SBomber()
   : exitFlag(false), startTime(0), finishTime(0), deltaTime(0), passedTime(0),
     fps(0), bombsNumber(10), score(0) {
   MyTools::WriteToLog(std::string(__func__) + " was invoked");
+
+  LogVisitor logVisitor;
 
   Plane* p = new Plane;
   p->SetDirection(1, 0.1);
