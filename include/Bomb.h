@@ -3,6 +3,8 @@
 #include "DynamicObject.h"
 #include "Visitor.h"
 
+class Visitor;
+
 class Bomb : public DynamicObject
 {
 public:
@@ -11,7 +13,7 @@ public:
 
 	void Draw() const override;
 
-    void Accept(const Visitor & v);
+    void Accept(Visitor & v);
 
 private:
 

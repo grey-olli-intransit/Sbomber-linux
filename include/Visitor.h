@@ -3,15 +3,17 @@
 //
 #pragma once
 
-#include "Plane.h"
 #include "Bomb.h"
+#include "Plane.h"
 #include "MyTools.h"
+
+class Bomb;
 
 class Visitor {
 public:
    virtual void log(Bomb & bomb) = 0;
    virtual void log(Plane & plain) = 0;
-
+   virtual ~Visitor() = default;
 };
 
 class LogVisitor final: public Visitor {

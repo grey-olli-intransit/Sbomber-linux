@@ -1,6 +1,7 @@
-#include "Bomb.h"
 #include <iostream>
 #include "ScreenSingleton.h"
+#include "Bomb.h"
+#include "Visitor.h"
 
 void Bomb::Draw() const {
   //ScreenSingleton::getInstance().SetColor(CC_LightMagenta);
@@ -8,7 +9,7 @@ void Bomb::Draw() const {
   std::cout << "*";
 }
 
-void  Bomb::Accept(const Visitor & v)
+void  Bomb::Accept(Visitor & v)
 {
     v.log(*this);
 }
