@@ -16,7 +16,7 @@ SBomber::SBomber()
     fps(0), bombsNumber(10), score(0) {
   MyTools::WriteToLog(std::string(__func__) + " was invoked");
 
-  LogVisitor logVisitor;
+  logVisitor = new LogVisitor;
 
   Plane* p = new Plane;
   p->SetDirection(1, 0.1);
@@ -79,6 +79,7 @@ SBomber::~SBomber() {
       delete vecStaticObj[i];
     }
   }
+  delete logVisitor;
 }
 
 void SBomber::MoveObjects() {
@@ -86,6 +87,12 @@ void SBomber::MoveObjects() {
 
   for (size_t i = 0; i < vecDynamicObj.size(); i++) {
     if (vecDynamicObj[i] != nullptr) {
+      Bomb * tmp_ptr = dynamic_cast<Bomb*>(vecDynamicObj[i]);
+      if(tmp_ptr != nullptr)
+          tmp_ptr->Accept(*logVisitor);
+      Plane * tmp_ptr2 = dynamic_cast<Plane*>(vecDynamicObj[i]);
+      if(tmp_ptr != nullptr)
+            tmp_ptr->Accept(*logVisitor);
       vecDynamicObj[i]->Move(deltaTime);
     }
   }

@@ -8,6 +8,7 @@
 #include "MyTools.h"
 
 class Bomb;
+class Plane;
 
 class Visitor {
 public:

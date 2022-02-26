@@ -7,6 +7,7 @@
 #include "Bomb.h"
 #include "Ground.h"
 #include "Tank.h"
+#include "Visitor.h"
 
 class SBomber
 {
@@ -26,7 +27,7 @@ public:
     void CheckObjects();
 
 private:
-
+    LogVisitor * logVisitor;
     void CheckPlaneAndLevelGUI();
     void CheckBombsAndGround();
     void  CheckDestoyableObjects(Bomb* pBomb);
