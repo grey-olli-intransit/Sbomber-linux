@@ -35,4 +35,4 @@ add_executable(Sbomber_linux
         src/SBomber.cpp
         src/ScreenSingleton.cpp
         src/Tank.cpp
-        main.cpp)
+        main.cpp src/Mediator.cpp include/Mediator.h)
