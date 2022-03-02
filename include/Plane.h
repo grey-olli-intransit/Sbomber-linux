@@ -5,7 +5,7 @@
 class Plane : public DynamicObject {
 public:
 
-    void Draw() const override;
+    void Draw() override;
 
     inline void ChangePlaneY(double dy) { yDirection += dy; }
 

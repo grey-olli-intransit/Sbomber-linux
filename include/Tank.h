@@ -15,7 +15,7 @@ public:
 
 	inline uint16_t GetScore() const override { return score; }
 
-	void Draw() const override;
+	void Draw() override;
 
 private:
     Mediator * mediator;

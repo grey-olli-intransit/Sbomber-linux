@@ -37,7 +37,7 @@ bool Tank::isInside(double x1, double x2) const
 	return false;
 }
 
-void Tank::Draw() const
+void Tank::Draw()
 {
 	ScreenSingleton::getInstance().SetColor(CC_Cyan);
 	ScreenSingleton::getInstance().GotoXY(x, y - 3);
@@ -48,6 +48,9 @@ void Tank::Draw() const
 	cout << "    #####";
 	ScreenSingleton::getInstance().GotoXY(x,y);
 	cout << " ###########";
-    if(this->mediator != nullptr)
-      this->mediator->sendMessage("Tank message 1.");
+    if(this->mediator != nullptr) {
+        this->mediator->sendMessage("Tank message 1.");
+        this->mediator->sendMessage("Tank message 2.");
+        this->mediator->sendMessage("Tank message 3.");
+    }
 }
