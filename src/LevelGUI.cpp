@@ -37,7 +37,8 @@ void LevelGUI::Draw() const
     std::cout << "BombsNum: " << bombsNumber;
     ScreenSingleton::getInstance().GotoXY(62, 1);
     std::cout << "Score: " << score;
-    std::cout << " Tank message: " << "Go away!" ;
+    if(! messages.empty())
+       std::cout << " Tank message: " << messages.front();
 }
 
 void  LevelGUI::SetParam(uint64_t passedTimeNew, uint64_t fpsNew, uint16_t bombsNumberNew, int16_t scoreNew)

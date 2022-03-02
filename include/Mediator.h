@@ -4,9 +4,14 @@
 #pragma once
 
 #include <string>
+#include "LevelGUI.h"
+
 
 class Mediator {
 public:
-    virtual void sendMessage(std::string message) = 0;
+    Mediator(LevelGUI * lvlGUIPtr) : levelGuiPtr(lvlGUIPtr){};
+    ~Mediator() = default;
+    void sendMessage(std::string message);
 private:
+    LevelGUI * levelGuiPtr;
 };

@@ -3,10 +3,13 @@
 #include <stdint.h>
 
 #include "DestroyableGroundObject.h"
+#include "Mediator.h"
 
 class Tank : public DestroyableGroundObject
 {
 public:
+
+    Tank(Mediator * m);
 
 	bool  isInside(double x1, double x2) const override;
 
@@ -15,7 +18,7 @@ public:
 	void Draw() const override;
 
 private:
-
+    Mediator * mediator;
 	const uint16_t score = 30;
 };
 

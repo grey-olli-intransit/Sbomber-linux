@@ -1,6 +1,8 @@
 #pragma once
 
 #include <stdint.h>
+#include <queue>
+#include <string>
 
 #include "GameObject.h"
 
@@ -17,6 +19,8 @@ public:
     inline void SetFinishX(uint16_t finishXN) { finishX = finishXN; }
 
     void Draw() const override;
+
+    std::queue<std::string> messages;
 
 private:
 
