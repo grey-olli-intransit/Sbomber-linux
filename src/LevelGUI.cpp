@@ -1,9 +1,10 @@
 #include "LevelGUI.h"
 #include <iostream>
+#include <queue>
 #include "MyTools.h"
 #include "ScreenSingleton.h"
 
-void LevelGUI::Draw() const
+void LevelGUI::Draw() 
 {
     ScreenSingleton::getInstance().SetColor(CC_White);
 
@@ -37,6 +38,15 @@ void LevelGUI::Draw() const
     std::cout << "BombsNum: " << bombsNumber;
     ScreenSingleton::getInstance().GotoXY(62, 1);
     std::cout << "Score: " << score;
+    if(! messages.empty()) {
+        std::cout << " Tank message: " << messages.front();
+        if (passedTime /1000.0 > 2)
+            messages.pop();
+        if (passedTime /1000.0 > 4)
+            messages.pop();
+        if (passedTime /1000.0 > 6)
+            messages.pop();
+    }
 }
 
 void  LevelGUI::SetParam(uint64_t passedTimeNew, uint64_t fpsNew, uint16_t bombsNumberNew, int16_t scoreNew)

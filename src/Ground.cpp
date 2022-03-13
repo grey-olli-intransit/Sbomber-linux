@@ -5,7 +5,7 @@
 #include "MyTools.h"
 #include <iostream>
 
-void Ground::Draw() const
+void Ground::Draw()
 {
     ScreenSingleton::getInstance().SetColor(CC_Green);
 

@@ -7,6 +7,7 @@
 #include "Bomb.h"
 #include "Ground.h"
 #include "Tank.h"
+#include "Mediator.h"
 
 class SBomber
 {
@@ -24,6 +25,8 @@ public:
     void DrawFrame();
     void MoveObjects();
     void CheckObjects();
+
+    Mediator * mediatorPtr;
 
 private:
 

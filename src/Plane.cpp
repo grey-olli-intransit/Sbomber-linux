@@ -5,7 +5,7 @@
 #include "MyTools.h"
 #include "ScreenSingleton.h"
 
-void Plane::Draw() const
+void Plane::Draw()
 {
     ScreenSingleton::getInstance().SetColor(CC_LightBlue);
     ScreenSingleton::getInstance().GotoXY(x, y);

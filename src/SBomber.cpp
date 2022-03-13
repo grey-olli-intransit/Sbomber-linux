@@ -32,6 +32,7 @@ SBomber::SBomber()
   pGUI->SetHeight(maxY - 4);
   pGUI->SetFinishX(offset + width - 4);
   vecStaticObj.push_back(pGUI);
+  mediatorPtr = new Mediator(pGUI);
 
   Ground* pGr = new Ground;
   const uint16_t groundY = maxY - 5;
@@ -39,12 +40,12 @@ SBomber::SBomber()
   pGr->SetWidth(width - 2);
   vecStaticObj.push_back(pGr);
 
-  Tank* pTank = new Tank;
+  Tank* pTank = new Tank(mediatorPtr);
   pTank->SetWidth(13);
   pTank->SetPos(30, groundY - 1);
   vecStaticObj.push_back(pTank);
 
-  pTank = new Tank;
+  pTank = new Tank(mediatorPtr);
   pTank->SetWidth(13);
   pTank->SetPos(50, groundY - 1);
   vecStaticObj.push_back(pTank);
